@@ -35,7 +35,7 @@ int base64_encode_block(const char* plaintext_in, int length_in, char* code_out,
 
 	switch (state_in->step)
 	{
-		while (1)
+		for(;;)
 		{
 	case step_A:
 			if (plainchar == plaintextend)

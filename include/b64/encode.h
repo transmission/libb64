@@ -31,9 +31,9 @@ namespace base64
 			return base64_encode_value(value_in);
 		}
 
-		int encode(const char* code_in, const int length_in, char* plaintext_out)
+		std::streamsize encode(const char* code_in, const std::streamsize length_in, char* plaintext_out)
 		{
-			return base64_encode_block(code_in, length_in, plaintext_out, &_state);
+			return base64_encode_block(code_in, static_cast<int>(length_in), plaintext_out, &_state);
 		}
 
 		int encode_end(char* plaintext_out)
@@ -48,8 +48,8 @@ namespace base64
 			const int N = _buffersize;
 			char* plaintext = new char[N];
 			char* code = new char[2*N];
-			int plainlength;
-			int codelength;
+			std::streamsize plainlength;
+			std::streamsize codelength;
 
 			do
 			{

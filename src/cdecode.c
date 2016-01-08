@@ -33,7 +33,7 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 
 	switch (state_in->step)
 	{
-		while (1)
+		for(;;)
 		{
 	case step_a:
 			do {

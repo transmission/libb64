@@ -31,9 +31,9 @@ namespace base64
 			return base64_decode_value(value_in);
 		}
 
-		int decode(const char* code_in, const int length_in, char* plaintext_out)
+		std::streamsize decode(const char* code_in, const std::streamsize length_in, char* plaintext_out)
 		{
-			return base64_decode_block(code_in, length_in, plaintext_out, &_state);
+			return base64_decode_block(code_in, static_cast<int>(length_in), plaintext_out, &_state);
 		}
 
 		void decode(std::istream& istream_in, std::ostream& ostream_in)
@@ -43,8 +43,8 @@ namespace base64
 			const int N = _buffersize;
 			char* code = new char[N];
 			char* plaintext = new char[N];
-			int codelength;
-			int plainlength;
+			std::streamsize codelength;
+			std::streamsize plainlength;
 
 			do
 			{
