@@ -41,7 +41,7 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 				{
 					state_in->step = step_a;
 					state_in->plainchar = *plainchar;
-					return plainchar - plaintext_out;
+					return (int)(plainchar - plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -52,7 +52,7 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 				{
 					state_in->step = step_b;
 					state_in->plainchar = *plainchar;
-					return plainchar - plaintext_out;
+					return (int)(plainchar - plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -64,7 +64,7 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 				{
 					state_in->step = step_c;
 					state_in->plainchar = *plainchar;
-					return plainchar - plaintext_out;
+					return (int)(plainchar - plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -76,7 +76,7 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 				{
 					state_in->step = step_d;
 					state_in->plainchar = *plainchar;
-					return plainchar - plaintext_out;
+					return (int)(plainchar - plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -84,6 +84,6 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 		}
 	}
 	/* control should not reach here */
-	return plainchar - plaintext_out;
+	return (int) (plainchar - plaintext_out);
 }
 
