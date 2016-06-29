@@ -15,6 +15,48 @@ void base64_init_encodestate(base64_encodestate* state_in)
 	state_in->chars_per_line = BASE64_CENC_DEFCPL;
 }
 
+/*
+ * Calculate required length of buffer for encoded string when using encoder state structure state_in for encoding
+ * and when having input data of size plain_len
+ *
+ * Return encoded length, or 0 if encoded length + one additional null byte would exceed range of size_t
+ */
+
+size_t base64_encode_length(size_t plain_len, base64_encodestate* state_in)
+{
+	size_t retmax = 0, retval;
+	size_t cpl = state_in->chars_per_line;
+
+	/*
+	 * Check for integer overflow. Takes into consideration that gcc may optimise out
+	 * naive integer overflow checks based on the C standard saying the result of overflow is undefined.
+	 */
+	retmax = ~retmax;
+	retval = (plain_len + 2) / 3;
+	if(retval > retmax / 4)
+		return 0;
+
+	retval *= 4;
+
+	/* Calculate number of linebreaks */
+	if(retval && cpl)
+	{
+		size_t numbreaks;
+
+		numbreaks = (retval - 1) / cpl + 1;
+
+		retmax -= retval;
+
+		/* Make sure there's always room for one additional 0 byte on top of our return value */
+		if(numbreaks < retmax)
+			return numbreaks + retval;
+		else
+			return 0;
+	}
+	else
+		return retval;
+}
+
 char base64_encode_value(signed char value_in)
 {
 	static const char* encoding = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -92,7 +134,7 @@ size_t base64_encode_block(const char* plaintext_in, const size_t length_in, cha
 
 			CHECK_BREAK();
 
-			result  = (fragment & 0x03f) >> 0;
+			result = (fragment & 0x03f) >> 0;
 			*codechar++ = base64_encode_value(result);
 		}
 	}
