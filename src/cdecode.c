@@ -23,7 +23,7 @@ void base64_init_decodestate(base64_decodestate* state_in)
 	state_in->plainchar = 0;
 }
 
-int base64_decode_block(const char* code_in, const int length_in, char* plaintext_out, base64_decodestate* state_in)
+size_t base64_decode_block(const char* code_in, const size_t length_in, char* plaintext_out, base64_decodestate* state_in)
 {
 	const char* codechar = code_in;
 	char* plainchar = plaintext_out;
@@ -41,7 +41,7 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 				{
 					state_in->step = step_a;
 					state_in->plainchar = *plainchar;
-					return (int)(plainchar - plaintext_out);
+					return (size_t)(plainchar - plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -52,7 +52,7 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 				{
 					state_in->step = step_b;
 					state_in->plainchar = *plainchar;
-					return (int)(plainchar - plaintext_out);
+					return (size_t)(plainchar - plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -64,7 +64,7 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 				{
 					state_in->step = step_c;
 					state_in->plainchar = *plainchar;
-					return (int)(plainchar - plaintext_out);
+					return (size_t)(plainchar - plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -76,7 +76,7 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 				{
 					state_in->step = step_d;
 					state_in->plainchar = *plainchar;
-					return (int)(plainchar - plaintext_out);
+					return (size_t)(plainchar - plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -84,6 +84,5 @@ int base64_decode_block(const char* code_in, const int length_in, char* plaintex
 		}
 	}
 	/* control should not reach here */
-	return (int) (plainchar - plaintext_out);
+	return (size_t) (plainchar - plaintext_out);
 }
-

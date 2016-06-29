@@ -23,7 +23,7 @@ char base64_encode_value(signed char value_in)
 	return encoding[(int)value_in];
 }
 
-int base64_encode_block(const char* plaintext_in, const int length_in, char* code_out, base64_encodestate* state_in)
+size_t base64_encode_block(const char* plaintext_in, const size_t length_in, char* code_out, base64_encodestate* state_in)
 {
 	const char* plainchar = plaintext_in;
 	const char* const plaintextend = plaintext_in + length_in;
@@ -42,7 +42,7 @@ int base64_encode_block(const char* plaintext_in, const int length_in, char* cod
 			{
 				state_in->result = result;
 				state_in->step = step_A;
-				return (int)(codechar - code_out);
+				return (size_t)(codechar - code_out);
 			}
 			fragment = *plainchar++;
 			result = (fragment & 0x0fc) >> 2;
@@ -53,7 +53,7 @@ int base64_encode_block(const char* plaintext_in, const int length_in, char* cod
 			{
 				state_in->result = result;
 				state_in->step = step_B;
-				return (int)(codechar - code_out);
+				return (size_t)(codechar - code_out);
 			}
 			fragment = *plainchar++;
 			result |= (fragment & 0x0f0) >> 4;
@@ -64,7 +64,7 @@ int base64_encode_block(const char* plaintext_in, const int length_in, char* cod
 			{
 				state_in->result = result;
 				state_in->step = step_C;
-				return (int)(codechar - code_out);
+				return (size_t)(codechar - code_out);
 			}
 			fragment = *plainchar++;
 			result |= (fragment & 0x0c0) >> 6;
@@ -81,10 +81,10 @@ int base64_encode_block(const char* plaintext_in, const int length_in, char* cod
 		}
 	}
 	/* control should not reach here */
-	return (int)(codechar - code_out);
+	return (size_t) (codechar - code_out);
 }
 
-int base64_encode_blockend(char* code_out, base64_encodestate* state_in)
+size_t base64_encode_blockend(char* code_out, base64_encodestate* state_in)
 {
 	char* codechar = code_out;
 
@@ -104,6 +104,6 @@ int base64_encode_blockend(char* code_out, base64_encodestate* state_in)
 	}
 	/* *codechar++ = '\n'; */
 
-	return (int)(codechar - code_out);
+	return (size_t) (codechar - code_out);
 }
 

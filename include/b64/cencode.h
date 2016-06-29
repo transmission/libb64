@@ -8,6 +8,11 @@ For details, see http://sourceforge.net/projects/libb64
 #ifndef BASE64_CENCODE_H
 #define BASE64_CENCODE_H
 
+#include "ccommon.h"
+
+#define BASE64_CENC_VER_MAJOR	2
+#define BASE64_CENC_VER_MINOR	0
+
 typedef enum
 {
 	step_A, step_B, step_C
@@ -17,16 +22,16 @@ typedef struct
 {
 	base64_encodestep step;
 	char result;
-	int stepcount;
+	size_t stepcount;
 } base64_encodestate;
 
 void base64_init_encodestate(base64_encodestate* state_in);
 
 char base64_encode_value(signed char value_in);
 
-int base64_encode_block(const char* plaintext_in, const int length_in, char* code_out, base64_encodestate* state_in);
+size_t base64_encode_block(const char* plaintext_in, const size_t length_in, char* code_out, base64_encodestate* state_in);
 
-int base64_encode_blockend(char* code_out, base64_encodestate* state_in);
+size_t base64_encode_blockend(char* code_out, base64_encodestate* state_in);
 
 #endif /* BASE64_CENCODE_H */
 
