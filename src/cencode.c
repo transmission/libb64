@@ -7,7 +7,7 @@ For details, see http://sourceforge.net/projects/libb64
 
 #include <b64/cencode.h>
 
-//static const int CHARS_PER_LINE = 72;
+/* static const int CHARS_PER_LINE = 72; */
 
 void base64_init_encodestate(base64_encodestate* state_in)
 {
@@ -73,11 +73,11 @@ int base64_encode_block(const char* plaintext_in, const int length_in, char* cod
 			*codechar++ = base64_encode_value(result);
 
 			++(state_in->stepcount);
-			// if (state_in->stepcount == CHARS_PER_LINE/4)
-			// {
-			// 	*codechar++ = '\n';
-			// 	state_in->stepcount = 0;
-			// }
+			/* if (state_in->stepcount == CHARS_PER_LINE/4)
+			{
+				*codechar++ = '\n';
+				state_in->stepcount = 0;
+			} */
 		}
 	}
 	/* control should not reach here */
@@ -102,7 +102,7 @@ int base64_encode_blockend(char* code_out, base64_encodestate* state_in)
 	case step_A:
 		break;
 	}
-	// *codechar++ = '\n';
+	/* *codechar++ = '\n'; */
 
 	return (int)(codechar - code_out);
 }
