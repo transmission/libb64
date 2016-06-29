@@ -12,7 +12,7 @@ void base64_init_encodestate(base64_encodestate* state_in)
 	state_in->step = step_A;
 	state_in->result = 0;
 	state_in->stepcount = 0;
-	state_in->quads_per_line = BASE64_CENC_DEFQPL;
+	state_in->chars_per_line = BASE64_CENC_DEFCPL;
 }
 
 char base64_encode_value(signed char value_in)
@@ -22,12 +22,23 @@ char base64_encode_value(signed char value_in)
 	return encoding[(int)value_in];
 }
 
+#define CHECK_BREAK()				\
+do						\
+{						\
+  if (cpl && state_in->stepcount >= cpl)	\
+  {						\
+    *codechar++ = '\n';				\
+    state_in->stepcount = 0;			\
+  }						\
+  state_in->stepcount++;			\
+} while(0);
+
 size_t base64_encode_block(const char* plaintext_in, const size_t length_in, char* code_out, base64_encodestate* state_in)
 {
 	const char* plainchar = plaintext_in;
 	const char* const plaintextend = plaintext_in + length_in;
 	char* codechar = code_out;
-	size_t qpl = state_in->quads_per_line;
+	size_t cpl = state_in->chars_per_line;
 	char result;
 	char fragment;
 
@@ -44,6 +55,9 @@ size_t base64_encode_block(const char* plaintext_in, const size_t length_in, cha
 				state_in->step = step_A;
 				return (size_t)(codechar - code_out);
 			}
+
+			CHECK_BREAK();
+
 			fragment = *plainchar++;
 			result = (fragment & 0x0fc) >> 2;
 			*codechar++ = base64_encode_value(result);
@@ -55,6 +69,9 @@ size_t base64_encode_block(const char* plaintext_in, const size_t length_in, cha
 				state_in->step = step_B;
 				return (size_t)(codechar - code_out);
 			}
+
+			CHECK_BREAK();
+
 			fragment = *plainchar++;
 			result |= (fragment & 0x0f0) >> 4;
 			*codechar++ = base64_encode_value(result);
@@ -66,21 +83,17 @@ size_t base64_encode_block(const char* plaintext_in, const size_t length_in, cha
 				state_in->step = step_C;
 				return (size_t)(codechar - code_out);
 			}
+
+			CHECK_BREAK();
+
 			fragment = *plainchar++;
 			result |= (fragment & 0x0c0) >> 6;
 			*codechar++ = base64_encode_value(result);
+
+			CHECK_BREAK();
+
 			result  = (fragment & 0x03f) >> 0;
 			*codechar++ = base64_encode_value(result);
-
-			if(qpl)
-			{
-				++(state_in->stepcount);
-				if (state_in->stepcount == qpl)
-				{
-					*codechar++ = '\n';
-					state_in->stepcount = 0;
-				}
-			}
 		}
 	}
 	/* control should not reach here */
@@ -90,24 +103,29 @@ size_t base64_encode_block(const char* plaintext_in, const size_t length_in, cha
 size_t base64_encode_blockend(char* code_out, base64_encodestate* state_in)
 {
 	char* codechar = code_out;
+	size_t cpl = state_in->chars_per_line;
 
 	switch (state_in->step)
 	{
 	case step_B:
+		CHECK_BREAK();
 		*codechar++ = base64_encode_value(state_in->result);
+		CHECK_BREAK();
 		*codechar++ = '=';
+		CHECK_BREAK();
 		*codechar++ = '=';
 		break;
 	case step_C:
+		CHECK_BREAK();
 		*codechar++ = base64_encode_value(state_in->result);
+		CHECK_BREAK();
 		*codechar++ = '=';
 		break;
 	case step_A:
 		break;
 	}
-	if(state_in->quads_per_line)
+	if(state_in->chars_per_line)
 		*codechar++ = '\n';
 
 	return (size_t) (codechar - code_out);
 }
-
