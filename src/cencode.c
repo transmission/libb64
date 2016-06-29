@@ -7,13 +7,12 @@ For details, see http://sourceforge.net/projects/libb64
 
 #include <b64/cencode.h>
 
-/* static const int CHARS_PER_LINE = 72; */
-
 void base64_init_encodestate(base64_encodestate* state_in)
 {
 	state_in->step = step_A;
 	state_in->result = 0;
 	state_in->stepcount = 0;
+	state_in->quads_per_line = BASE64_CENC_DEFQPL;
 }
 
 char base64_encode_value(signed char value_in)
@@ -28,6 +27,7 @@ size_t base64_encode_block(const char* plaintext_in, const size_t length_in, cha
 	const char* plainchar = plaintext_in;
 	const char* const plaintextend = plaintext_in + length_in;
 	char* codechar = code_out;
+	size_t qpl = state_in->quads_per_line;
 	char result;
 	char fragment;
 
@@ -72,12 +72,15 @@ size_t base64_encode_block(const char* plaintext_in, const size_t length_in, cha
 			result  = (fragment & 0x03f) >> 0;
 			*codechar++ = base64_encode_value(result);
 
-			++(state_in->stepcount);
-			/* if (state_in->stepcount == CHARS_PER_LINE/4)
+			if(qpl)
 			{
-				*codechar++ = '\n';
-				state_in->stepcount = 0;
-			} */
+				++(state_in->stepcount);
+				if (state_in->stepcount == qpl)
+				{
+					*codechar++ = '\n';
+					state_in->stepcount = 0;
+				}
+			}
 		}
 	}
 	/* control should not reach here */
@@ -102,7 +105,8 @@ size_t base64_encode_blockend(char* code_out, base64_encodestate* state_in)
 	case step_A:
 		break;
 	}
-	/* *codechar++ = '\n'; */
+	if(state_in->quads_per_line)
+		*codechar++ = '\n';
 
 	return (size_t) (codechar - code_out);
 }

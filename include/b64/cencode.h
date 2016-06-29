@@ -18,11 +18,14 @@ typedef enum
 	step_A, step_B, step_C
 } base64_encodestep;
 
+#define BASE64_CENC_DEFQPL	0
+
 typedef struct
 {
 	base64_encodestep step;
 	char result;
 	size_t stepcount;
+	size_t quads_per_line;
 } base64_encodestate;
 
 void base64_init_encodestate(base64_encodestate* state_in);
@@ -34,4 +37,3 @@ size_t base64_encode_block(const char* plaintext_in, const size_t length_in, cha
 size_t base64_encode_blockend(char* code_out, base64_encodestate* state_in);
 
 #endif /* BASE64_CENCODE_H */
-
