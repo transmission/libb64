@@ -13,7 +13,7 @@ For details, see http://sourceforge.net/projects/libb64
  * Return the value as size_t
  */
 
-size_t base64_decode_minlength(size_t encode_len)
+size_t base64_decode_maxlength(size_t encode_len)
 {
 	return encode_len / 4 * 3 + 2;
 }
@@ -34,7 +34,7 @@ void base64_init_decodestate(base64_decodestate* state_in)
 	state_in->plainchar = 0;
 }
 
-size_t base64_decode_block(const char* code_in, const size_t length_in, char* plaintext_out, base64_decodestate* state_in)
+size_t base64_decode_block(const char* code_in, const size_t length_in, void* plaintext_out, base64_decodestate* state_in)
 {
 	const char* codechar = code_in;
 	char* plainchar = plaintext_out;
@@ -52,7 +52,7 @@ size_t base64_decode_block(const char* code_in, const size_t length_in, char* pl
 				{
 					state_in->step = step_a;
 					state_in->plainchar = *plainchar;
-					return (size_t)(plainchar - plaintext_out);
+					return (size_t)(plainchar - (char *) plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -63,7 +63,7 @@ size_t base64_decode_block(const char* code_in, const size_t length_in, char* pl
 				{
 					state_in->step = step_b;
 					state_in->plainchar = *plainchar;
-					return (size_t)(plainchar - plaintext_out);
+					return (size_t)(plainchar - (char *) plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -75,7 +75,7 @@ size_t base64_decode_block(const char* code_in, const size_t length_in, char* pl
 				{
 					state_in->step = step_c;
 					state_in->plainchar = *plainchar;
-					return (size_t)(plainchar - plaintext_out);
+					return (size_t)(plainchar - (char *) plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -87,7 +87,7 @@ size_t base64_decode_block(const char* code_in, const size_t length_in, char* pl
 				{
 					state_in->step = step_d;
 					state_in->plainchar = *plainchar;
-					return (size_t)(plainchar - plaintext_out);
+					return (size_t)(plainchar - (char *) plaintext_out);
 				}
 				fragment = base64_decode_value(*codechar++);
 			} while (fragment < 0);
@@ -95,5 +95,5 @@ size_t base64_decode_block(const char* code_in, const size_t length_in, char* pl
 		}
 	}
 	/* control should not reach here */
-	return (size_t) (plainchar - plaintext_out);
+	return (size_t) (plainchar - (char *) plaintext_out);
 }

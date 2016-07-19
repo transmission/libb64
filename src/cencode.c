@@ -75,10 +75,10 @@ do						\
   state_in->stepcount++;			\
 } while(0);
 
-size_t base64_encode_block(const char* plaintext_in, const size_t length_in, char* code_out, base64_encodestate* state_in)
+size_t base64_encode_block(const void* plaintext_in, const size_t length_in, char* code_out, base64_encodestate* state_in)
 {
 	const char* plainchar = plaintext_in;
-	const char* const plaintextend = plaintext_in + length_in;
+	const char* const plaintextend = plainchar + length_in;
 	char* codechar = code_out;
 	size_t cpl = state_in->chars_per_line;
 	char result;
