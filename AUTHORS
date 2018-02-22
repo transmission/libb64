@@ -1,4 +1,4 @@
-libb64: Base64 Encoding/Decoding Routines
+﻿libb64: Base64 Encoding/Decoding Routines
 ======================================
 
 Authors:
@@ -12,8 +12,10 @@ Contributors:
 Mario Rugiero
 Shlok Datye
 Peter K. Lee
+Stefan Gänsler      https://github.com/libb64/libb64/commits?author=stefan-muc
+Thilo Schulz        https://github.com/libb64/libb64/commits?author=thiloschulz
 
 Patches by:
 ------------
-Harry Rostovtsev http://sourceforge.net/p/libb64/bugs/1/#8706
-Jakub Wilk http://sourceforge.net/p/libb64/bugs/2/#4d16
+Harry Rostovtsev    http://sourceforge.net/p/libb64/bugs/1/#8706
+Jakub Wilk          http://sourceforge.net/p/libb64/bugs/2/#4d16
