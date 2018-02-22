@@ -7,7 +7,7 @@ libb64 is a library of ANSI C routines for fast encoding/decoding data into and
 from a base64-encoded format. C++ wrappers are included, as well as the source
 code for standalone encoding and decoding executables.
 
-base64 consists of ASCII text, and is therefore a useful encoding for storing 
+base64 consists of ASCII text, and is therefore a useful encoding for storing
 binary data in a text file, such as xml, or sending binary data over text-only
 email.
 
@@ -17,7 +17,7 @@ References:
 	http://en.wikipedia.org/wiki/Base64
 * base64, another implementation of a commandline en/decoder:
 	http://www.fourmilab.ch/webtools/base64/
-	
+
 Why?
 ---
 I did this because I need an implementation of base64 encoding and decoding,
@@ -27,18 +27,10 @@ either the GNU/GPL, or a BSD-variant, which is not what I require.
 Also, the chance to actually use the co-routine implementation in code is rare,
 and its use here is fitting. I couldn't pass up the chance.
 For more information on this technique, see "Coroutines in C", by Simon Tatham,
-which can be found online here: 
+which can be found online here:
 http://www.chiark.greenend.org.uk/~sgtatham/coroutines.html
 
 So then, under which license do I release this code? On to the next section...
-
-History:
--------
-This library is based on libb64 project on sourceforge
-https://sourceforge.net/projects/libb64/
-
-As development there seems to have stopped in 2010 we forked the source to github
-and included the patches included in https://sourceforge.net/p/libb64/bugs/
 
 License:
 -------
@@ -49,6 +41,14 @@ can take it and do whatever you want with it.
 An example of this "license" is the Creative Commons Public Domain License, a
 copy of which can be found in the LICENSE file, and also online at
 http://creativecommons.org/licenses/publicdomain/
+
+History:
+-------
+This library is based on libb64 project on sourceforge
+https://sourceforge.net/projects/libb64/
+
+As development there seems to have stopped in 2010 we forked the source to github
+and included the patches included in https://sourceforge.net/p/libb64/bugs/
 
 Commandline Use:
 ---------------
