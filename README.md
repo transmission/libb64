@@ -37,15 +37,19 @@ As development there seems to have stopped in 2010 we forked the source to GitHu
 
 Commandline Use
 ---------------
-There is a new executable available, it is simply called base64. It can encode and decode files, as instructed by the user.
+There is a new executable available, it is simply called `base64`. It can encode and decode files, as instructed by the user.
 
 To encode a file:
+
     $ ./base64 -e filea fileb
-fileb will now be the base64-encoded version of filea.
+
+`fileb` will now be the base64-encoded version of `filea`.
 
 To decode a file:
+
     $ ./base64 -d fileb filec
-filec will now be identical to filea.
+
+`filec` will now be identical to `filea`.
 
 Programming
 -----------
