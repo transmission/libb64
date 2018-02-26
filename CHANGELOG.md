@@ -3,6 +3,15 @@ libb64: Base64 Encoding/Decoding Routines
 
 ## Changelog ##
 
+Version 2.0.0 Release
+---------------------
+* Introduce version macros for detection of incompatible API / version
+* size_t as argument to allow longer base64 encoded strings
+* re-introduce line break functionality this time with line with configurable
+* add flags field for encoder to mage it configureable (currently unused)
+* add functions to calculate required output buffer maximum lengths
+* change in-/out-pointers to void* as we don't need to make assumptions about kind of data
+
 Version 1.4.1 Release
 ---------------------
 * Fix differing prototypes in cencode.h and cdecode.h
