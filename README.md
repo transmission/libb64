@@ -35,6 +35,8 @@ This library is based on libb64 project on sourceforge https://sourceforge.net/p
 
 As development there seems to have stopped in 2010 we forked the source to GitHub and included the patches included in https://sourceforge.net/p/libb64/bugs/
 
+GitHub project home can be found at https://github.com/libb64/libb64
+
 Commandline Use
 ---------------
 There is a new executable available, it is simply called `base64`. It can encode and decode files, as instructed by the user.
