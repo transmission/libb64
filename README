@@ -1,6 +1,10 @@
 b64: Base64 Encoding/Decoding Routines
 ======================================
 
+*CAUTION:* You are viewing an old version of libb64 for legacy purposes.
+This branch will no longer be actively maintained and might only receive
+really necessary bugfixes. Please switch newer version if possible.
+
 Overview:
 --------
 libb64 is a library of ANSI C routines for fast encoding/decoding data into and
