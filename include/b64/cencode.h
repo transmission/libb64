@@ -10,6 +10,8 @@ For details, see http://sourceforge.net/projects/libb64
 
 #include "ccommon.h"
 
+#include <stddef.h>
+
 #define BASE64_CENC_VER_MAJOR	2
 #define BASE64_CENC_VER_MINOR	0
 
