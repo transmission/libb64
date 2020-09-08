@@ -8,12 +8,12 @@ For details, see http://sourceforge.net/projects/libb64
 #ifndef BASE64_ENCODE_H
 #define BASE64_ENCODE_H
 
+#include "cencode.h"
+
 #include <iostream>
 
 namespace base64
 {
-
-#include "cencode.h"
 
 	struct encoder
 	{
