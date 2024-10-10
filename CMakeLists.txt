@@ -7,6 +7,7 @@ if(PROJECT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif()
 
 option(LIBB64_SHARED "${PROJECT_NAME}: Build shared library" ${BUILD_SHARED_LIBS})
+option(LIBB64_BOTH "${PROJECT_NAME}: Build static library in addition to shared library" OFF)
 option(LIBB64_ENABLE_INSTALL "${PROJECT_NAME}: Enable install" ${LIBB64_STANDALONE_BUILD})
 option(LIBB64_ENABLE_TESTS "${PROJECT_NAME}: Enable tests" ${LIBB64_STANDALONE_BUILD})
 option(LIBB64_ENABLE_WERROR "${PROJECT_NAME}: Treat warnings as errors" ${LIBB64_STANDALONE_BUILD})
