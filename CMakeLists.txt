@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 project(libb64 VERSION 2.0.0 LANGUAGES C)
 
 set(LIBB64_STANDALONE_BUILD OFF)
